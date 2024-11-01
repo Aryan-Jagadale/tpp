@@ -12,7 +12,7 @@ app.get('/version', (req, res) => {
 })
 
 app.get('/tp', (req, res) => {
-  res.send('tppppppp')
+  res.send('Test app working...!!!')
 })
 
 app.get('/health', (req, res) => {
