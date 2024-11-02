@@ -7,10 +7,10 @@ on:
   pull_request:
     branches: [main]
     types: [opened, synchronize]
-  schedule:
-    # Run the health check every 10 minutes
-    - cron: "*/10 * * * *"
-  workflow_dispatch:
+  # schedule:
+  #   # Run the health check every 10 minutes
+  #   - cron: "*/10 * * * *"
+  # workflow_dispatch:
 
 jobs:
   simple_Deployment_pipeline:
