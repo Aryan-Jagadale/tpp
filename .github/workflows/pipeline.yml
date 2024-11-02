@@ -47,33 +47,33 @@ jobs:
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
           details: "❌ Deployment failed for commit ${{ github.sha }} on branch ${{ github.ref_name }}"
           severity: error
-  health_check:
-    runs-on: ubuntu-20.04
+  # health_check:
+  #   runs-on: ubuntu-20.04
 
-    steps:
-      - name: Check URL Health
-        uses: jtalk/url-health-check-action@v4
-        with:
-          url: https://ci-cd-test-0glq.onrender.com
-          max-attempts: 3
-          retry-delay: 5s
-      - name: Log Cron Run
-        run: echo "Cron job triggered at $(date)"
+  #   steps:
+  #     - name: Check URL Health
+  #       uses: jtalk/url-health-check-action@v4
+  #       with:
+  #         url: https://ci-cd-test-0glq.onrender.com
+  #         max-attempts: 3
+  #         retry-delay: 5s
+  #     - name: Log Cron Run
+  #       run: echo "Cron job triggered at $(date)"
 
-      # Success Notification on Discord
-      - name: Notify Success on Discord
-        if: success()
-        uses: rjstone/discord-webhook-notify@v1
-        with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          details: "✅ Health check successful for URL ${{ secrets.HEALTH_CHECK_URL }}"
-          severity: info
+  #     # Success Notification on Discord
+  #     - name: Notify Success on Discord
+  #       if: success()
+  #       uses: rjstone/discord-webhook-notify@v1
+  #       with:
+  #         webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+  #         details: "✅ Health check successful for URL ${{ secrets.HEALTH_CHECK_URL }}"
+  #         severity: info
 
-      # Failure Notification on Discord
-      - name: Notify Failure on Discord
-        if: failure()
-        uses: rjstone/discord-webhook-notify@v1
-        with:
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-          details: "❌ Health check failed for URL ${{ secrets.HEALTH_CHECK_URL }}"
-          severity: error
+  #     # Failure Notification on Discord
+  #     - name: Notify Failure on Discord
+  #       if: failure()
+  #       uses: rjstone/discord-webhook-notify@v1
+  #       with:
+  #         webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+  #         details: "❌ Health check failed for URL ${{ secrets.HEALTH_CHECK_URL }}"
+  #         severity: error
