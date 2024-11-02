@@ -25,11 +25,24 @@ jobs:
            working-directory: ci-cd-intro/full-stack-open-pokedex-main
          - name: Trigger deployment
            run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
-    # tag_release:
-    #     needs: [simple_Deployment_pipeline]
-    #     runs-on: ubuntu-20.04
-    #     steps:
-    #       - name: Bump version and push tag
-    #         uses: anothrNick/github-tag-action@1.64.0
-    #         env:
-    #          GITHUB_TOKEN: ${{ secrets.B_TOKEN }}
+
+         # Success Notification on Discord
+         - name: Notify Success on Discord
+           if: success()
+           uses: rjstone/discord-webhook-notify@v1
+           with:
+             webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+             details: "✅ Deployment successful for commit ${{ github.sha }} on branch ${{ github.ref_name }}"
+             severity: info
+
+    failure_notification:
+        runs-on: ubuntu-20.04
+        if: failure()
+        steps:
+          # Failure Notification on Discord
+          - name: Notify Failure on Discord
+            uses: rjstone/discord-webhook-notify@v1
+            with:
+              webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+              details: "❌ Deployment failed for commit ${{ github.sha }} on branch ${{ github.ref_name }}"
+              severity: error
