@@ -4,7 +4,7 @@ on:
   schedule:
     # Run the health check every 10 minutes
     - cron: '*/10 * * * *'
-  workflow_dispatch: # Allows manual triggering of the workflow
+  workflow_dispatch:
 
 jobs:
   health_check:
