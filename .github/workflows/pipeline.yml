@@ -21,7 +21,7 @@ jobs:
            run: npm install
            working-directory: ci-cd-intro/full-stack-open-pokedex-main
          - name: Check Style
-           run: npm run nonexistent-script
+           run: npm run nonexistent-script  # Intentional failure to test notifications
            working-directory: ci-cd-intro/full-stack-open-pokedex-main
          - name: Trigger deployment
            run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
@@ -35,14 +35,11 @@ jobs:
              details: "✅ Deployment successful for commit ${{ github.sha }} on branch ${{ github.ref_name }}"
              severity: info
 
-    failure_notification:
-        runs-on: ubuntu-20.04
-        if: failure()
-        steps:
-          # Failure Notification on Discord
-          - name: Notify Failure on Discord
-            uses: rjstone/discord-webhook-notify@v1
-            with:
-              webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-              details: "❌ Deployment failed for commit ${{ github.sha }} on branch ${{ github.ref_name }}"
-              severity: error
+         # Failure Notification on Discord
+         - name: Notify Failure on Discord
+           if: failure()
+           uses: rjstone/discord-webhook-notify@v1
+           with:
+             webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+             details: "❌ Deployment failed for commit ${{ github.sha }} on branch ${{ github.ref_name }}"
+             severity: error
