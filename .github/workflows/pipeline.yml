@@ -57,6 +57,8 @@ jobs:
           url: https://ci-cd-test-0glq.onrender.com
           max-attempts: 3
           retry-delay: 5s
+      - name: Log Cron Run
+        run: echo "Cron job triggered at $(date)"
 
       # Success Notification on Discord
       - name: Notify Success on Discord
